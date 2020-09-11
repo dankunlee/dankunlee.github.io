@@ -5,6 +5,7 @@ categories:
 tags:
   - Java
   - Spring Boot
+  - JPA
 ---
 
 **Intro**
