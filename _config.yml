@@ -96,7 +96,7 @@ author:
   name             : "Daniel Lee"
   avatar           : "/assets/images/bio-photo.jpg"
   bio              : "I love Hawaiian pizza."
-  location         : "Somewhere"
+  location         : "Earth"
   email            :
   links:
     #- label: "Email"
@@ -116,7 +116,7 @@ author:
       url: "https://github.com/dankunlee"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://linkedin.com/"
+      url: "https://linkedin.com/tobeupdated"
 
 # Site Footer
 footer:
@@ -132,7 +132,7 @@ footer:
       url: "https://github.com/dankunlee"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
-      url: "https://linkedin.com/"
+      url: "https://linkedin.com/tobeupdated"
     #- label: "GitLab"
     #  icon: "fab fa-fw fa-gitlab"
     #  # url:
