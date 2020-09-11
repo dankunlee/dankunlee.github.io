@@ -28,7 +28,7 @@ There are two main build automation systems for Java projects, Maven and Gradle.
 
 I chose to go with Gradle as it seemed easier to read.
 
-[image](/assets/images/tutorial1/springBootInitializer.png)
+![image](/assets/images/tutorial1/springBootInitializer.png)
 
 When you create a project, the structure of the code will be like below:
 //image: initalfilestructure
@@ -110,9 +110,9 @@ Now if you goto "localhost:8080", you will see a hello world printed.
 
 //image: helloworld
 
-# Java Persistance API
+# Connect JPA to DB
 
-JPA is a Jakarta EE application programming interface specification that describes the management of relational data in Java applications.
+JPA(Java Persistance API) is a Jakarta EE application programming interface specification that describes the management of relational data in Java applications.
 
 We'll be using Spring-data-jpa (Spring Boot's object relation mapping library) to interact with database system indirectly.  
 
@@ -133,7 +133,7 @@ dependencies {
 }
 ```
 
-## Connect JPA to DB
+## application.yml
 We need to configure general settings for this application (ex. how we are going to connect to a DB). 
 
 From "src -> resources -> application.properties", we can configure these. 
