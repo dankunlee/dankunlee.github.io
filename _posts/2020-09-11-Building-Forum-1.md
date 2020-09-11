@@ -8,6 +8,7 @@ tags:
   - Spring Boot
   - JPA
 classes: wide
+toc: true
 ---
 
 **Intro**
