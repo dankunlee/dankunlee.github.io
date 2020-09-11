@@ -32,7 +32,7 @@ build.gradle file contains all the dependencies that I included.
 Explain dependencies
 
 
-```java
+```
 plugins {
 	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
