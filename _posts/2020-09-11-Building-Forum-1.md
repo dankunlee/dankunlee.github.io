@@ -11,14 +11,14 @@ classes: wide
 toc: true
 ---
 
-**Intro**
+# Intro
 
 This post is to write how I built a simple web forum back-end API using Spring Boot for fun.
 
 The main build automation systems for Java projects are Maven and Gradle.  
 I chose to go with Gradle as it seemed easier to read.
 
-**Getting started with Spring Initializer**
+# Getting started with Spring Initializer 
 
 I created a Spring Boot project using Spring Initializer as shown below. 
 //image: springBootInitializer.png
