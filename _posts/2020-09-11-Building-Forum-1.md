@@ -1,5 +1,6 @@
 ---
 title: "Building a simple web forum 1"
+date: 2020-09-11T15:34:30-04:00
 categories:
   - Tutorial
 tags:
