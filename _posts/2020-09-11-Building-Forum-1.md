@@ -29,6 +29,7 @@ There are two main build automation systems for Java projects, Maven and Gradle.
 I chose to go with Gradle as it seemed easier to read.
 
 ![image](/assets/images/tutorial1/springBootInitializer.png)
+<img src="/assets/images/tutorial1/springBootInitializer.png" alt="">
 
 When you create a project, the structure of the code will be like below:
 //image: initalfilestructure
