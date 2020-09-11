@@ -7,6 +7,7 @@ tags:
   - Java
   - Spring Boot
   - JPA
+classes: wide
 ---
 
 **Intro**
