@@ -1,5 +1,5 @@
 ---
-title: "Building a simple web forum 4: Data Auditing"
+title: "Building a simple web forum 4: Auditing & Authorization"
 date: 2020-09-12T00:34:30-04:00
 categories:
   - Tutorial
@@ -156,5 +156,7 @@ public class WebConfigurer implements WebMvcConfigurer {
 }
 ```
 
-We can now see by who and when the post has been created. 
+---
+We can now see by who and when the post has been created or modified. 
 ![image](/assets/images/tutorial1/postman_post2.png)  
+
