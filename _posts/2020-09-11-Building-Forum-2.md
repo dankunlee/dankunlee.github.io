@@ -329,7 +329,7 @@ public class Comment extends Auditing {
 }
 ```
 
-
+---
 Following is the codes for Comment's repository. 
 
 ```java
@@ -346,7 +346,7 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 }
 ```
 
-
+---
 Now let's make Controller for Comment. 
 
 ```java
