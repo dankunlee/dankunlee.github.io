@@ -33,7 +33,7 @@ When you create a project, the structure of the code will be like below:
 ![image](/assets/images/tutorial1/initialFileStructure.png)  
 
 _build.gradle_ file contains all the dependencies that I included from the initializer.  
-Explain dependencies   
+   
 Because we haven't configured for JPA yet, let's comment it out as it will only run into errors. 
 
 ```
@@ -65,6 +65,8 @@ test {
 }
 ```
 
+## Running the application
+
 The main function of _ForumApplication_ will look like this. 
 
 ```java
@@ -87,7 +89,7 @@ This is because there is no mapping to "localhost:8080/".
 
 Create a package called "controller" and let's write a sample controller. 
 
-What is a controller
+I'll write what a controller does in a bit. 
 
 ```java
 package com.dankunlee.forum.controller;
@@ -107,7 +109,7 @@ This will be our first endpoint of the website.
 
 Now if you goto "localhost:8080", you will see a hello world printed. 
 
-//image: helloworld
+![image](/assets/images/tutorial1/helloWorld.png)  
 
 # Connect JPA to DB
 
@@ -115,9 +117,7 @@ JPA(Java Persistance API) is a Jakarta EE application programming interface spec
 
 We'll be using Spring-data-jpa (Spring Boot's object relation mapping library) to interact with database system indirectly.  
 
-You can also use persistance frameworks that maps SQL commands directly to databases such as _mybatis_, 
-
-but I prefer to use ORM as it allows more object-oriented model for playing with databases.
+You can also use persistance frameworks that maps SQL commands directly to databases such as _mybatis_, but I prefer to use ORM as it allows more object-oriented model for playing with databases.
 
 Now let's uncomment the jpa dependency from _build.gradle_. 
 
@@ -132,12 +132,15 @@ dependencies {
 }
 ```
 
-## application.yml
-We need to configure general settings for this application (ex. how we are going to connect to a DB). 
+## Configuration: application.yml
+
+We need to configure general settings for this application (ex. to which DB are we connecting). 
 
 From "src -> resources -> application.properties", we can configure these. 
 
-Because I prefer YAML format, I converted the file to _yml_ type and made some changes. 
+Because I prefer YAML format, I converted the file to _yml_ type and configured the settings. 
+
+Keep in mind that I'm connecting to my local MySQL database system. 
 
 ```
 server:
@@ -172,189 +175,3 @@ spring:
 ```
 
 Spring framework will read configurations from _application.yml_ and automatically apply those. 
-
-## How does Spring JPA work?
-
-Basic Structure: Controller -> Repository -> Entity -> DB
-
-## Entity
-
-Now let's make an _entity_ package which will contain all the necessary DB entities. 
-
-Below is a _post_ entity for storing information about posts. 
-
-```java
-package com.dankunlee.forumapp.entity;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import java.util.Objects;
-
-@Entity
-public class Post extends Auditing{
-    @Id
-    @GeneratedValue
-    @Column(name = "post_id")
-    private long id;
-
-    @NotNull // for validating the input
-    @Column(nullable = false) // for setting the key NOT NULL
-    private String title;
-
-    private String content;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, content);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        Post post = (Post) obj;
-        return Objects.equals(post.id, id) &&
-                Objects.equals(post.title, title) &&
-                Objects.equals(post.content, content);
-    }
-}
-```
-
-## Repository
-
-The next step is to create _repository_ package and interface for . 
-
-Think of repository objects as DAO (Data Access Object)  
---> runs queries for creating, reading, updating and deleting entries from DBs.
-
-```java
-package com.dankunlee.forumapp.repository;
-
-import com.dankunlee.forumapp.entity.Post;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface PostRepository extends JpaRepository<Post, Long> {
-
-}
-```
-
-By extending _JpaRepository_ interface, you can now use this interface for retrieving data. 
-
-For example, _findAll()_ method will retrieve all "post"s from the DB and _findById()_ will retrieve a post with the specified id.
-
-See _Controller_ for more details.   
-
-## Controller
-
-To use above repository, you need a controller that returns the outputs to endpoints.
-
-Create _controller_ package and postController. 
-
-```java
-package com.dankunlee.forumapp.controller;
-
-import com.dankunlee.forumapp.entity.Post;
-import com.dankunlee.forumapp.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
-import java.util.Optional;
-
-@RestController
-public class PostController {
-    @Autowired
-    private PostRepository postRepository;
-
-    @GetMapping("/")
-    public String hello() {
-        return "API";
-    }
-
-    @PutMapping("/api/post")
-    public Post newPost(@Valid @RequestBody Post newPost) {
-        // creates a new post in the db
-        Post createdPost = postRepository.save(newPost);
-        return createdPost;
-    }
-
-    @GetMapping("/api/post")
-    public List<Post> getAllPost() {
-        // retrieves all posts from the db
-        return postRepository.findAll();
-    }
-
-    @GetMapping("/api/post/{id}")
-    public Post getPost(@PathVariable String id) {
-        // retrieves a post with specified id
-        Long postID = Long.parseLong(id);
-        Optional<Post> postOptional = postRepository.findById(postID);
-        Post post = postOptional.get();
-        return post;
-    }
-
-    @PostMapping("/api/post/{id}")
-    public Post updatePost(@PathVariable String id, @Valid @RequestBody Post updatedPost) {
-        // modifies(replaces) the post with the provided new post 
-        Long postID = Long.parseLong(id);
-        Optional<Post> postOptional = postRepository.findById(postID);
-
-        Post post = postOptional.get();
-        post.setTitle(updatedPost.getTitle());
-        post.setContent(updatedPost.getContent());
-        postRepository.save(post);
-
-        return postRepository.findById(postID).get();
-    }
-
-    @DeleteMapping("/api/post/{id}")
-    public String deletePost(@PathVariable String id) {
-        // deletes the post with specified id
-        Long postID = Long.parseLong(id);
-        postRepository.deleteById(postID);
-        return "Deleted";
-    }
-}
-```
-
-Following annotations are used to implement HTTP request methods. 
-
-@PutMapping = PUT  
-@GetMapping = GET  
-@PostMapping = POST  
-@DeleteMapping = DELETE   
-
-@PathVariable annotation allows each methods to take an input id from specified URL.  
-@RequestBody annotation allows the methods to take the body of HTTP request.
-
-
-
-
