@@ -249,7 +249,7 @@ To implement this, we can put _@ManyToOne_ annotation on many side (Comment) and
 
 See below code for example. 
 
-```Java
+```java
 package com.dankunlee.forumapp.entity;
 
 import org.hibernate.annotations.OnDelete;
