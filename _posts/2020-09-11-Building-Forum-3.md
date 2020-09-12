@@ -405,7 +405,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-@EnableJpaAuditing
 public class WebConfigurer implements WebMvcConfigurer {
     @Autowired
     LogInInterceptor logInInterceptor;
