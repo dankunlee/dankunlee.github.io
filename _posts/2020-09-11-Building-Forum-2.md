@@ -47,7 +47,7 @@ Controller handles view and mapping according to http requests from end-users.
 For example, if a user wants to see an image:  
 The application will access DB through DAO, gets the image path data in DTO format, then Service will load the image from the path and sends the image to the user  through Controller 
 
-# Post
+# Post Functionality using MVC
 
 Now let's apply MVC design and create the most basic functionality of internet forum: Posting
 
@@ -234,6 +234,173 @@ Here, we do not require Serivce for post as we just pass the data(posts) to user
 You can test what we have so far using Postman. 
 
 ![image](/assets/images/tutorial1/postman_post1.png) 
+
+# Comment Functionality with JPA Relationship Mapping
+
+Now we can post writings, let's enable commenting. 
+
+Comment functionality can be implemented very similary to Post functionality. 
+
+The only difference is, a post can have multiple comments whereas a comment can't be at multiple posts.  
+
+This requires performing _1 to Many_ relatinship.
+
+To implement this, we can put _@ManyToOne_ annotation on many side (Comment) and put _@JoinColumn_ annotation with the other side's key (Post). 
+
+See below code for example. 
+
+```Java
+package com.dankunlee.forumapp.entity;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
+
+@Entity
+public class Comment extends Auditing {
+    @Id
+    @GeneratedValue
+    @Column(name = "comment_id")
+    private long id;
+
+    @NotNull
+    @Column(nullable = false)
+    private String content;
+
+    @NotNull
+    @Column(nullable = false)
+    private String writer;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    @OnDelete(action = OnDeleteAction.CASCADE) // if an entry in Post table is deleted, comments in that post are deleted
+    private Post post; // unidirectional m:1 relationship to post_id of Post
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getWriter() {
+        return writer;
+    }
+
+    public void setWriter(String writer) {
+        this.writer = writer;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, content, writer, post);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Comment comment = (Comment) obj;
+        return Objects.equals(id, comment.id) &&
+                Objects.equals(content, comment.content) &&
+                Objects.equals(writer, comment.writer) &&
+                Objects.equals(post, comment.post);
+    }
+}
+```
+
+Following is the codes for Comment's repository. 
+
+```java
+package com.dankunlee.forumapp.repository;
+
+import com.dankunlee.forumapp.entity.Comment;
+import com.dankunlee.forumapp.entity.Post;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface CommentRepository extends JpaRepository<Comment, Long> {
+    public List<Comment> findByPost(Post post); //JPA's derived query method
+}
+```
+
+Now let's make Controller for Comment. 
+
+```java
+package com.dankunlee.forumapp.controller;
+
+import com.dankunlee.forumapp.entity.Comment;
+import com.dankunlee.forumapp.entity.Post;
+import com.dankunlee.forumapp.repository.CommentRepository;
+import com.dankunlee.forumapp.repository.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
+@RestController
+public class CommentController {
+    @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @PutMapping("/api/post/{id}/comment")
+    public Comment createComment(@PathVariable Long id, @Valid @RequestBody Comment comment) {
+        Post post = postRepository.findById(id).get();
+        comment.setPost(post);
+        commentRepository.save(comment);
+        return comment;
+    }
+
+    @GetMapping("/api/post/{id}/comment")
+    public List<Comment> getComments(@PathVariable Long id) {
+        Post post = postRepository.findById(id).get();
+        List<Comment> comments = commentRepository.findByPost(post);
+        return comments;
+    }
+
+    @PostMapping("/api/post/{postId}/comment/{commentId}")
+    public Comment updateComment(@PathVariable Long postId, @PathVariable Long commentId,
+                                 @Valid @RequestBody Comment updatedComment) {
+        Comment comment = commentRepository.findById(commentId).get();
+        comment.setContent(updatedComment.getContent());
+        comment.setWriter(updatedComment.getWriter());
+        commentRepository.save(comment);
+
+        return commentRepository.findById(commentId).get();
+    }
+
+    @DeleteMapping("/api/post/{postId}/comment/{commentId}")
+    public String deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
+        commentRepository.deleteById(commentId);
+        return "Deleted";
+    }
+}
+```
 
 # Handling Exceptions
 
