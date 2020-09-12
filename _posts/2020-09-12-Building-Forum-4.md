@@ -123,7 +123,6 @@ public class WebConfigurer implements WebMvcConfigurer {
         */
 
         registry.addInterceptor(logInInterceptor)
-                .excludePathPatterns("/api/post/page/**")
                 .addPathPatterns("/api/post/**")
                 .addPathPatterns("/api/post/**/comment/**");
     }
@@ -310,12 +309,10 @@ public class WebConfigurer implements WebMvcConfigurer {
         */
 
         registry.addInterceptor(logInInterceptor)
-                .excludePathPatterns("/api/post/page/**")
                 .addPathPatterns("/api/post/**")
                 .addPathPatterns("/api/post/**/comment/**");
 
         registry.addInterceptor(postAuthorizationInterceptor)
-                .excludePathPatterns("/api/post/page")
                 .excludePathPatterns("/api/post/**/comment/**")
                 .addPathPatterns("/api/post/**");
 
