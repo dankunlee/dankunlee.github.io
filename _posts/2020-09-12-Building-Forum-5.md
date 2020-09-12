@@ -25,7 +25,7 @@ If we use SQL query, the possible way would be:
 ```sql
 SELECT * 
 FROM Post 
-WHERE post_id > LIMIT pageLength * (pageNumb - 1) 
+WHERE post_id > pageLength * (pageNumb - 1) 
 LIMIT pageLength;
 ```
 
@@ -133,7 +133,7 @@ public class PagingController {
 ```
 
 ---
-Don't forget to exclude URL for paging from interceptors. 
+Don't forget to exclude the URL for paging from interceptors. 
 
 ```java
     @Override
@@ -170,7 +170,7 @@ FROM Post post
 WHERE post.title LIKE %:title% OR post.content LIKE %:content%;
 ```
 
-The first query searches for a certain post and the second query counts the number of found posts (for paging). 
+The first query searches for a certain post and the second query counts the number of found posts (this is required if we want to display the results with paging). 
 
 The modified Post repository will look like this:
 
@@ -188,7 +188,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 As you can see, Spring JPA allows direct mapping of SQL quries to a repository. 
 
-We continue modifying Post Controller since searching is technically belongs to paging. 
+We continue modifying Post Controller since searching technically belongs to paging. 
 
 ```java
 @Controller
@@ -219,5 +219,6 @@ public class PagingController {
 }
 ```
 
-Try testing searching with "https://localhost:8080/api/post/page/search?keyword=lunch&page=0&size=13".
+Try testing searching with:  
+"https://localhost:8080/api/post/page/search?keyword=lunch&page=0&size=13".
 
