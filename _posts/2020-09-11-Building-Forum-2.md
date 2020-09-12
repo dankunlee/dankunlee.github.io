@@ -1,5 +1,5 @@
 ---
-title: "Building a simple web forum 2: MVC"
+title: "Building a simple web forum 2: What is MVC?"
 date: 2020-09-11T16:34:30-04:00
 categories:
   - Tutorial
