@@ -47,7 +47,11 @@ Controller handles view and mapping according to http requests from end-users.
 For example, if a user wants to see an image:  
 The application will access DB through DAO, gets the image path data in DTO format, then Service will load the image from the path and sends the image to the user  through Controller 
 
-# Entity
+# Post
+
+Now let's create the most basic functionality of internet forum: Posting
+
+## Entity
 
 Now let's make an _entity_ package which will link to DB table. 
 
@@ -118,7 +122,7 @@ public class Post extends Auditing{
 ```
 When you run the application, you will see that the DB has created _Post_ table. 
 
-# Repository
+## Repository
 
 The next step is to create _repository_ package and repository interface for post. 
 
@@ -141,7 +145,7 @@ For example, _findAll()_ method will retrieve all "post"s from the DB and _findB
 
 See _Controller_ for more details.   
 
-# Controller
+## Controller
 
 To use above repository, you need a controller that will return the data to endpoints.
 
@@ -225,4 +229,80 @@ Following annotations are used to implement HTTP request methods.
   @PathVariable annotation allows each methods to take an input id from specified URL.  
   @RequestBody annotation allows the methods to take the body of HTTP request.
 
-Here, we do not require Serivce for post as we just pass the data to users. 
+Here, we do not require Serivce for post as we just pass the data(posts) to users. 
+
+You can test what we have so far using Postman. 
+
+![image](/assets/images/tutorial1/postman_post.png) 
+
+# Handling Exceptions
+
+Now let's handle exceptions that might occur when invalid inputs are given. 
+
+Spring Boot provides a convenient way of handling all exceptions acrros the application. 
+
+You can use _@ExceptionHandler_ annotation for error handling and _@ControllerAdvice_ annotation for applying them acrross the whole application.
+
+Here, I'm handling 3 types of exceptions. 
+
+```java
+package com.dankunlee.forumapp.controller;
+
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.NoSuchElementException;
+
+class Error {
+    String errorMsg;
+    int errorNumb;
+
+    public Error(String msg, int numb) {
+        this.errorMsg = msg;
+        this.errorNumb = numb;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public int getErrorNumb() {
+        return errorNumb;
+    }
+
+    public void setErrorNumb(int errorNumb) {
+        this.errorNumb = errorNumb;
+    }
+}
+
+@ControllerAdvice // allows this class to handle all exceptions globally
+public class ExceptionController {
+    public static final int ITEM_DOES_NOT_EXIST = -1;
+    public static final int INVALID_PATH = -2;
+    public static final int INVALID_PARAMETER = -3;
+
+    @ResponseBody // a method return value should be bound to the web response body (json format)
+    @ExceptionHandler(NoSuchElementException.class)
+    public Error noItemErrorHandler(NoSuchElementException e) {
+        return new Error("Item Does Not Exist", ITEM_DOES_NOT_EXIST);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(NumberFormatException.class)
+    public Error noItemErrorHandler(NumberFormatException e) {
+        return new Error("Path in Invalid Format", INVALID_PATH);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Error invalidMethodHandler(MethodArgumentNotValidException e) {
+        return new Error("Invalid Parameter is Given", INVALID_PARAMETER);
+    }
+}
+```
