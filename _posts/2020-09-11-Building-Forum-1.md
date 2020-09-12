@@ -1,5 +1,5 @@
 ---
-title: "Building a simple web forum 1"
+title: "Building a simple web forum 1: Intro/Setup"
 date: 2020-09-11T15:34:30-04:00
 categories:
   - Tutorial
@@ -21,21 +21,19 @@ As everything here is hosted on my local machine, you may experience some troubl
 # Getting started with Spring Initializer 
 
 Spring Initializer is useful for creating a Boot project.   
-
-This <a href="https://spring.io/guides/gs/spring-boot/#scratch">link</a> is a good resource to get started. 
+(Read this <a href="https://spring.io/guides/gs/spring-boot/#scratch">link</a> as this is a good resource to get started.)
 
 There are two main build automation systems for Java projects, Maven and Gradle.
 
 I chose to go with Gradle as it seemed easier to read.
 
-![image](/assets/images/tutorial1/springBootInitializer.png)
-<img src="/assets/images/tutorial1/springBootInitializer.png" alt="">
+![image](/assets/images/tutorial1/springBootInitializer.png)  
 
-When you create a project, the structure of the code will be like below:
-//image: initalfilestructure
+When you create a project, the structure of the code will be like below:  
+![image](/assets/images/tutorial1/initialFileStructure.png)  
 
-_build.gradle_ file contains all the dependencies that I included from the initializer. 
-Explain dependencies
+_build.gradle_ file contains all the dependencies that I included from the initializer.  
+Explain dependencies   
 Because we haven't configured for JPA yet, let's comment it out as it will only run into errors. 
 
 ```
