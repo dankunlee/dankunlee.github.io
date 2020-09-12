@@ -217,12 +217,12 @@ public class PostController {
 
 Following annotations are used to implement HTTP request methods. 
 
-@PutMapping = PUT  
-@GetMapping = GET  
-@PostMapping = POST  
-@DeleteMapping = DELETE   
+  @PutMapping = PUT  
+  @GetMapping = GET  
+  @PostMapping = POST  
+  @DeleteMapping = DELETE   
 
-@PathVariable annotation allows each methods to take an input id from specified URL.  
-@RequestBody annotation allows the methods to take the body of HTTP request.
+  @PathVariable annotation allows each methods to take an input id from specified URL.  
+  @RequestBody annotation allows the methods to take the body of HTTP request.
 
 Here, we do not require Serivce for post as we just pass the data to users. 
