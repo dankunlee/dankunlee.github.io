@@ -87,7 +87,7 @@ public class Comment extends Auditing { ... }
 ---
 Go back to WebConfigurer and add auditorProvider with @EnableJpaAuditing to enable JPA auditing. 
 
-'''java
+```java
 package com.dankunlee.forumapp.config;
 
 import com.dankunlee.forumapp.interceptor.CommentAuthorizationInterceptor;
