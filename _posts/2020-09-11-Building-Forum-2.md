@@ -26,26 +26,21 @@ Below shows the MVC design.
 
 ![image](/assets/images/tutorial1/MVC.png)  
 
-**Entity**
-
+**Entity**  
 Entity is a class that will be linked with DB’s tables
 
-**DAO** 
-
+**DAO**  
 Data Access Object directly interacts with the persistence layer of DB (CRUD DB data). 
 We use Repositories to implement this. 
 
-**DTO**
-
+**DTO**  
 When data travels to Service or Controller, they transform into Data Transfer Object. 
 DTO is just an object that holds data. It consists only of getters and setters (setters are rarely used). 
 
-**Service**
-
+**Service**  
 Service handles buisness logics. If you want to pass the data directly to the View (user) then there is no need for Service. 
 
-**Controller**
-
+**Controller**  
 Controller handles view and mapping according to http requests from end-users.  
 (ex. gets a request from a user and returns a DTO object)
 
@@ -123,7 +118,7 @@ public class Post extends Auditing{
 ```
 When you run the application, you will see that the DB has created _Post_ table. 
 
-## Repository
+# Repository
 
 The next step is to create _repository_ package and repository interface for post. 
 
@@ -146,7 +141,7 @@ For example, _findAll()_ method will retrieve all "post"s from the DB and _findB
 
 See _Controller_ for more details.   
 
-## Controller
+# Controller
 
 To use above repository, you need a controller that will return the data to endpoints.
 
@@ -230,3 +225,4 @@ Following annotations are used to implement HTTP request methods.
 @PathVariable annotation allows each methods to take an input id from specified URL.  
 @RequestBody annotation allows the methods to take the body of HTTP request.
 
+Here, we do not require Serivce for post as we just pass the data to users. 
