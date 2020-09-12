@@ -49,11 +49,11 @@ The application will access DB through DAO, gets the image path data in DTO form
 
 # Post
 
-Now let's create the most basic functionality of internet forum: Posting
+Now let's apply MVC design and create the most basic functionality of internet forum: Posting
 
 ## Entity
 
-Now let's make an _entity_ package which will link to DB table. 
+Make an _entity_ package which will link to DB table. 
 
 Below is a _post_ entity for storing information about posts. 
 
