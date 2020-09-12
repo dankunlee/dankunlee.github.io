@@ -409,12 +409,6 @@ public class WebConfigurer implements WebMvcConfigurer {
     @Autowired
     LogInInterceptor logInInterceptor;
 
-    @Autowired
-    PostAuthorizationInterceptor postAuthorizationInterceptor;
-
-    @Autowired
-    CommentAuthorizationInterceptor commentAuthorizationInterceptor;
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // Applies interceptors to the following urls
@@ -427,14 +421,6 @@ public class WebConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(logInInterceptor)
                 .excludePathPatterns("/api/post/page/**")
                 .addPathPatterns("/api/post/**")
-                .addPathPatterns("/api/post/**/comment/**");
-
-        registry.addInterceptor(postAuthorizationInterceptor)
-                .excludePathPatterns("/api/post/page")
-                .excludePathPatterns("/api/post/**/comment/**")
-                .addPathPatterns("/api/post/**");
-
-        registry.addInterceptor(commentAuthorizationInterceptor)
                 .addPathPatterns("/api/post/**/comment/**");
     }
 }
