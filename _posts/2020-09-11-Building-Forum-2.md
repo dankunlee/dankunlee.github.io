@@ -233,7 +233,7 @@ Here, we do not require Serivce for post as we just pass the data(posts) to user
 
 You can test what we have so far using Postman. 
 
-![image](/assets/images/tutorial1/postman_post.png) 
+![image](/assets/images/tutorial1/postman_post1.png) 
 
 # Handling Exceptions
 
