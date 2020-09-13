@@ -350,6 +350,7 @@ class FileNotFoundException extends RuntimeException {
 Controller will use the file Service to interact with users for file related jobs. 
 
 _uploadFile()_ method saves the file uploaded by a user and stores the URI (where users can download the file) in DB.  
+
 Then it returns the link with the file information such as file name, size, URI and type. 
 
 _uploadMultipleFiles()_ method is same as _uploadFile_ method, except this method can handle uploading multiple files. 
