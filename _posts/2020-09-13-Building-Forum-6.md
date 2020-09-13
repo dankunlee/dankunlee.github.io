@@ -349,12 +349,14 @@ class FileNotFoundException extends RuntimeException {
 
 Controller will use the file Service to interact with users for file related jobs. 
 
-_uploadFile_ method saves the file uploaded by a user and stores the link for downloading the file in DB.  
-Then it returns the link with the file information such as file name, size, and type. 
+_uploadFile_ method saves the file uploaded by a user and stores the URI (where users can download the file) in DB.  
+Then it returns the link with the file information such as file name, size, URI and type. 
 
 _uploadMultipleFiles_ method is same as _uploadFile_ method, except this method can handle uploading multiple files. 
 
+_downloadFilesInfo_ method returns file information on all files associtated with the specified post. 
 
+_downloadFile_ returns the whole HTTP resposne (status code, header and body of the file resource). 
 
 ```java
 package com.dankunlee.forumapp.controller;
@@ -455,4 +457,15 @@ public class FileController {
 
 }
 ```
+
+---
+We can test if file uploading works as intended. 
+
+![image](/assets/images/tutorial1/file_upload.png) 
+
+![image](/assets/images/tutorial1/file_getFilesInfo.png)
+
+And from the file info, we can use the file URI to download the file. 
+
+![image](/assets/images/tutorial1/file_download.png) 
 
