@@ -165,13 +165,6 @@ spring:
     properties:
       hibernate.enable_lazy_load_no_trans: true
       hibernate.format_sql: true
-
-  servlet:
-    multipart:
-      enabled: true
-      file-size-threshold: 2KB
-      max-file-size: 200MB
-      max-request-size: 200MB
 ```
 
 Spring framework will read configurations from _application.yml_ and automatically apply those. 
