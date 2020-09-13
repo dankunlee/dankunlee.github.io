@@ -1,4 +1,4 @@
- ---
+---
 title: "Building a simple web forum 6: File Uploading and Downloading"
 date: 2020-09-11T16:34:30-04:00
 categories:
@@ -39,7 +39,8 @@ field1=value1&field2=value2
 ```
 
 ---
-_multipart/form-data_
+_multipart/form-data_:
+
 ```
 POST /test HTTP/1.1 
 Host: foo.example
@@ -54,6 +55,25 @@ Content-Disposition: form-data; name="field2"; filename="example.txt"
 
 value2
 --boundary--
+```
+
+## Configuration
+
+Let's set the configuration for uploading/downloading files functionality provided by Spring. 
+
+Add following settings to application.yml:
+
+```
+  servlet: # under spring
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 200MB
+
+# Path to where uploaded files will be saved
+file:
+  path: "/Desktop"
 ```
 
 
