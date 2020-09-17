@@ -21,7 +21,7 @@ The back-end was built using Spring Boot.
 
 It was hosted locally and an android app was built to test the functionalities of the server. 
 
-The back-end part can be found [here](link) and the app can be found [here](https://github.com/dankunlee/Web-Forum-Android-App).
+The back-end part can be found [here](https://github.com/dankunlee/Web-Forum-REST-API) and the app can be found [here](https://github.com/dankunlee/Web-Forum-Android-App).
 
 # Demo
 
