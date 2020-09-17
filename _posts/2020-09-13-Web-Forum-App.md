@@ -15,7 +15,7 @@ toc: true
 
 # Intro
 
-I built a simple RESTful web forum application. 
+A simple RESTful web forum application. 
 
 The back-end was built using Spring Boot. 
 
